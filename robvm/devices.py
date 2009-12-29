@@ -144,4 +144,6 @@ class IC(Device):
 
 class Battery(Device):
     voltage = None
+    wire_p = Wire()
+    wire_n = Wire()
 

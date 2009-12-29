@@ -65,6 +65,10 @@ V = 7.5*volt
 R = 10*ohm
 A = V / R = 0.75*ampere
 
+The 'flow' method must return a dictionary with some properties of
+the flow out, but the main thing here is that it have to move the
+flow to the next devices on the other wire.
+
     >>> myres = Resistor(resistance=10*ohm)
     >>> myres.flow(voltage=7.5*volt) == 0.75*ampere
     True
