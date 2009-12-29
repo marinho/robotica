@@ -1,0 +1,124 @@
+DEVICES
+=======
+
+Take a looke at:
+
+- http://en.wikipedia.org/wiki/Electronic_device
+
+Resistors
+---------
+
+    >>> from robvm.devices import Resistor, RESISTOR_TYPE_FIXED,\
+    ...     RESISTOR_TYPE_VOLATILE
+    >>> from robvm.chemicals import Si, C, O, WrongChemical
+    >>> from robvm.units import ohm, volt, ampere
+
+Transforms eletric power to thermal power (joule effect).
+
+    >>> myres = Resistor()
+
+Can be made from carbon or silicon.
+
+    >>> myres = Resistor(made_from=Si)
+    >>> myres = Resistor(made_from=C)
+
+    >>> try:
+    ...     myres = Resistor(made_from=O)
+    ... except WrongChemical:
+    ...     print 'WrongChemical'
+    WrongChemical
+
+They can be fixed or volatiles.
+
+    >>> myres = Resistor(type=RESISTOR_TYPE_FIXED)
+    >>> myres = Resistor(type=RESISTOR_TYPE_VOLATILE)
+
+The main characteristics of resistor are 'resistance' ...
+
+    >>> myres = Resistor(resistance=10*ohm)
+
+... and 'tolerance'
+
+    >>> myres = Resistor(tolerance=10*ohm)
+
+Other characteristic is 'temperature coefficient'
+
+    >>> myres = Resistor(temperature_coefficient=10*ohm)
+
+Other characteristic is 'noise'
+
+    >>> myres = Resistor(noise=10*ohm)
+
+Other characteristic is 'inductance'
+
+    >>> myres = Resistor(inductance=10*ohm)
+
+Other characteristic is 'critical resistance'
+
+    >>> myres = Resistor(critical_resistance=10*ohm)
+
+A resistor has a resistance 1*ohm if a Tension of 1*volt on it make 
+run in it a current flow with 1*ampere intensity, what means 1*coulomb
+of power charge.
+
+V = 7.5*volt
+R = 10*ohm
+A = V / R = 0.75*ampere
+
+    >>> myres = Resistor(resistance=10*ohm)
+    >>> myres.flow(voltage=7.5*volt) == 0.75*ampere
+    True
+
+Transistors
+-----------
+
+    >>> from robvm.devices import Transistor
+
+Capacitor
+---------
+
+    >>> from robvm.devices import Capacitor
+
+Diode
+-----
+
+    >>> from robvm.devices import Diode
+
+Led
+---
+
+    >>> from robvm.devices import Led
+
+All of them together
+--------------------
+
+Just a simple schema, a converter using Zener diode and transistor, that
+receives in 12V and responses out 6V.
+
+Source: http://www.free-circuit.com/12v-to-97-56-vdc-converter-with-2n3055/
+
+    >>> from robvm.devices import Board, Battery, In, Out, SIGNAL_POSITIVE,\
+    ...     SIGNAL_NEGATIVE
+
+    >>> simple = Board()
+    >>> simple['vin_p'] = In(signal=SIGNAL_POSITIVE)
+    >>> simple['vin_n'] = In(signal=SIGNAL_NEGATIVE)
+    >>> simple['vout_p'] = Out(signal=SIGNAL_POSITIVE)
+    >>> simple['vout_n'] = Out(signal=SIGNAL_NEGATIVE)
+    >>> simple['r1'] = Resistor()
+    >>> simple['q1'] = Transistor()
+    >>> simple['zd1'] = Diode()
+
+    >>> simple['vin_p'].connect_to(simple['q1'].wire_1)
+    >>> simple['vin_p'].cable.connect_to(simple['r1'].wire_1)
+    >>> simple['q1'].wire_2.connect_to(simple['vout_p'])
+    >>> simple['vin_n'].connect_to(simple['vout_n'])
+    >>> simple['zd1'].wire_2.connect_to(simple['q1'].wire_3)
+    >>> simple['r1'].wire_2.connect_to(simple['zd1'].wire_2.cable)
+    >>> simple['vin_p'].cable.connect_to(simple['zd1'].wire_1)
+
+IC
+--
+
+Before all
+
