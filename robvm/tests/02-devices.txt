@@ -11,7 +11,7 @@ Resistors
     >>> from robvm.devices import Resistor, RESISTOR_TYPE_FIXED,\
     ...     RESISTOR_TYPE_VOLATILE
     >>> from robvm.chemicals import Si, C, O, WrongChemical
-    >>> from robvm.units import ohm, volt, ampere
+    >>> from robvm.units import Value
 
 Transforms eletric power to thermal power (joule effect).
 
@@ -35,42 +35,42 @@ They can be fixed or volatiles.
 
 The main characteristics of resistor are 'resistance' ...
 
-    >>> myres = Resistor(resistance=10*ohm)
+    >>> myres = Resistor(resistance=Value('10 ohm'))
 
 ... and 'tolerance'
 
-    >>> myres = Resistor(tolerance=10*ohm)
+    >>> myres = Resistor(tolerance=Value('10 ohm'))
 
 Other characteristic is 'temperature coefficient'
 
-    >>> myres = Resistor(temperature_coefficient=10*ohm)
+    >>> myres = Resistor(temperature_coefficient=Value('10 ohm'))
 
 Other characteristic is 'noise'
 
-    >>> myres = Resistor(noise=10*ohm)
+    >>> myres = Resistor(noise=Value('10 ohm'))
 
 Other characteristic is 'inductance'
 
-    >>> myres = Resistor(inductance=10*ohm)
+    >>> myres = Resistor(inductance=Value('10 ohm'))
 
 Other characteristic is 'critical resistance'
 
-    >>> myres = Resistor(critical_resistance=10*ohm)
+    >>> myres = Resistor(critical_resistance=Value('10 ohm'))
 
-A resistor has a resistance 1*ohm if a Tension of 1*volt on it make 
-run in it a current flow with 1*ampere intensity, what means 1*coulomb
+A resistor has a resistance 1 ohm if a Tension of 1 volt on it make 
+run in it a current flow with 1 ampere intensity, what means 1*coulomb
 of power charge.
 
-V = 7.5*volt
-R = 10*ohm
-A = V / R = 0.75*ampere
+V = 7.5 volt
+R = 10 ohm
+A = V / R = 0.75 ampere
 
 The 'flow' method must return a dictionary with some properties of
 the flow out, but the main thing here is that it have to move the
 flow to the next devices on the other wire.
 
-    >>> myres = Resistor(resistance=10*ohm)
-    >>> myres.flow(voltage=7.5*volt) == 0.75*ampere
+    >>> myres = Resistor(resistance=Value('10 ohm'))
+    >>> myres.flow(voltage=Value('7.5 volt')) == Value('0.75 ampere')
     True
 
 Transistors
