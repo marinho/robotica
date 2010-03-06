@@ -68,3 +68,12 @@ I = V / R
     >>> (Value('9 volt') / Value('2 ohm')).as_string()
     '4.5 ampere'
 
+Exp x Exp
+
+    >>> (Value('9x10^6') * Value('2x10^2')).as_string()
+    '18x10^8'
+
+Exp / Exp
+
+
+
