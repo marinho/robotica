@@ -1,0 +1,58 @@
+DEVICES
+=======
+
+Take a looke at:
+
+- http://en.wikipedia.org/wiki/Electronic_device
+
+Terminal
+--------
+
+    >>> from prometeu.devices import Terminal
+
+    >>> t1 = Terminal()
+    >>> t1.connection is None
+    True
+
+    >>> from prometeu.devices import Wire
+
+Wire
+----
+
+    >>> w1 = Wire()
+
+    >>> isinstance(w1.terminals[0], Terminal)
+    True
+
+    >>> isinstance(w1.terminals[1], Terminal)
+    True
+
+    >>> w2 = Wire()
+
+    >>> w2.terminals[0].connect_to(w1.terminals[0])
+    >>> w2.terminals[0].connection == w1.terminals[0]
+    True
+
+Resistors
+---------
+
+    >>> from prometeu.devices import Resistor
+
+    >>> res1 = Resistor(resistance=100)
+    >>> res2 = Resistor(resistance=20)
+
+    >>> isinstance(res1.terminals[0], Terminal)
+    True
+
+    >>> isinstance(res1.terminals[1], Terminal)
+    True
+
+PowerSource
+-----------
+
+Ground
+------
+
+Capacitor
+---------
+
